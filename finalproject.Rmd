@@ -81,8 +81,8 @@ a %>%
 TopRating <-
   googleplaystore %>%
   inner_join(googleplayreviews) %>% 
-  select( App = App, Rating, avgPolarity,avgSubjectivity ) %>%
-  group_by(App,avgPolarity,Rating,avgSubjectivity) %>%
+  select( App = App, Rating, avgPolarity,avgSubjectivity,Category ) %>%
+  group_by(App,avgPolarity,Rating,avgSubjectivity,Category) %>%
   summarise(total=n(),
             avgRating= mean(Rating))
 TopRating
@@ -120,13 +120,13 @@ TopRating2 <-
 TopRating2
 
 #Inspect the average sentiment polartiy of high rating app 
-TopRating %>%
+TopRating2 %>%
   group_by(avgRating,avgPolarity) %>% 
   summarise(count =n()) %>%
   ggplot(aes(x=avgRating,y=avgPolarity, group=avgRating))+
   geom_boxplot()
 
-TopRating %>%
+TopRating2 %>%
   ggplot(aes(x=avgRating,y=avgPolarity,color = Category))+
   geom_point()
 
